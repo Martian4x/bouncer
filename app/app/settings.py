@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-huq7=es76)7ak90bw&e4921(x84$+-2g4b=0lq)pk+hwn-#*_('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = ['*']
 
@@ -119,6 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/vol/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -129,15 +131,15 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 # Every message with level of DEBUG and above will be logged into the console
 LOGGING = {
-    'version': 1, 
+    'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console':{
+        'console': {
             'class': 'logging.StreamHandler',
         },
     },
-    'root':{
-        'handlers':['console'],
+    'root': {
+        'handlers': ['console'],
         'level': 'DEBUG',
     }
 }
